@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";  // Removed useEffect
+
+import Image from "next/image";  // Import Image from next/image
 
 interface Playlist {
   id: string;
@@ -15,13 +17,7 @@ interface Video {
 }
 
 export default function YouTubeIntegration() {
-  const [playlists, setPlaylists] = useState<Playlist[]>([]);
-  const [videos, setVideos] = useState<Video[]>([]);
-  const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true); // Sidebar toggle state
-
-  // Mock data for playlists
-  const mockPlaylists: Playlist[] = [
+  const playlists: Playlist[] = [
     {
       id: "1",
       title: "Tech Tutorials",
@@ -41,6 +37,10 @@ export default function YouTubeIntegration() {
       videoCount: 4,
     },
   ];
+
+  const [videos, setVideos] = useState<Video[]>([]);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
 
   const mockVideos: Record<string, Video[]> = {
     "1": [
@@ -75,24 +75,16 @@ export default function YouTubeIntegration() {
     ],
   };
 
-  // Initialize playlists with mock data
-  useEffect(() => {
-    setPlaylists(mockPlaylists);
-  }, []);
-
-  // Fetch videos based on selected playlist
   const fetchVideos = (playlistId: string) => {
     setVideos(mockVideos[playlistId] || []);
     setSelectedPlaylist(playlistId);
   };
 
-  // Handle YouTube import button click (placeholder function)
   const handleImportFromYouTube = () => {
     console.log("Import from YouTube clicked");
     // Add your logic to handle YouTube import here.
   };
 
-  // Toggle sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -135,10 +127,12 @@ export default function YouTubeIntegration() {
                   : "hover:bg-indigo-700"}  // Hover state background`}
               onClick={() => fetchVideos(playlist.id)}
             >
-              <img
+              <Image
                 src={playlist.thumbnail}
                 alt={playlist.title}
-                className="w-16 h-16 rounded-md"
+                width={64}  // Set width
+                height={64} // Set height
+                className="rounded-md"
               />
               <div className="ml-4">
                 <h3 className="font-semibold">{playlist.title}</h3>
@@ -169,9 +163,11 @@ export default function YouTubeIntegration() {
                 key={video.id}
                 className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300"
               >
-                <img
+                <Image
                   src={video.thumbnail}
                   alt={video.title}
+                  width={320}  // Set width
+                  height={180} // Set height
                   className="w-full h-40 object-cover rounded-lg mb-4"
                 />
                 <div className="text-center">

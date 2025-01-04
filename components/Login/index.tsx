@@ -9,7 +9,7 @@ export default function LoginPage({ onSuccess }: LoginPageProps) {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const [showModal, setShowModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false); // For successful login modal
   const [error, setError] = useState("");
@@ -35,7 +35,7 @@ export default function LoginPage({ onSuccess }: LoginPageProps) {
       setError("Invalid OTP. Try again.");
     } else {
       setError("");
-      setIsLoggedIn(true);
+     
       setShowSuccessModal(true); // Show the success modal when OTP is validated
       onSuccess(); // Trigger the onSuccess callback after successful login
     }
